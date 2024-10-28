@@ -17,6 +17,7 @@ import EmployeeTimesheet from "./Pages/Employee Services/EmployeeTimesheet";
 import FinancialDashboard from "./Pages/FinancialAidServices/FinancialDashboard";
 import StudentRecords from "./Pages/StudentServices/StudentRecords";
 import GraduationDateAccordion from "./Pages/StudentServices/GraduationDateAccordion";
+import GoogleCalendar from "./components/GoogleCalender";
 
 // import FinancialInfo from "./Pages/Financial Aid/FinancialInfo";
 
@@ -40,10 +41,13 @@ export default function App() {
         <Route path="/studentprofile" element={<StudentProfile />} />
         <Route path="/help" element={<Help />} />
         <Route path="/employeedashboard" element={<EmployeeDashboard />} />
-        <Route path="/employeetimesheet" element={<EmployeeTimesheet />} />
+        <Route path="/employeetimesheet" element={<EmployeeTimesheet/>} />
         <Route path="/studentrecords" element={<StudentRecords />} />
         <Route path="/financialAidDashboard" element={<FinancialDashboard />} />
         <Route path="/graduationdateaccordion" element={<GraduationDateAccordion />} />
+        <Route path="/googlecalendar" element={<GoogleCalendar />} />
+        
+       
 
       </Routes >
     </div >
