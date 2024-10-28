@@ -1,7 +1,7 @@
 import React from "react";
 import HomePage from "./Pages/HomePage/HomePage";
 import PersonalInfo from "./Pages/HomePage/PersonalInfo";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import StudentServices from "./Pages/HomePage/StudentServices";
 import EmployeeServices from "./Pages/HomePage/EmpServices";
 import FinancialAid from "./Pages/HomePage/FinancialAid";
