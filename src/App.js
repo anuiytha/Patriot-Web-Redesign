@@ -1,7 +1,7 @@
 import React from "react";
 import HomePage from "./Pages/HomePage/HomePage";
 import PersonalInfo from "./Pages/HomePage/PersonalInfo";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import StudentServices from "./Pages/HomePage/StudentServices";
 import EmployeeServices from "./Pages/HomePage/EmpServices";
 import FinancialAid from "./Pages/HomePage/FinancialAid";
@@ -22,6 +22,8 @@ import GraduationDateAccordion from "./Pages/StudentServices/GraduationDateAccor
 
 
 export default function App() {
+
+  const navigate = useNavigate();
   return (
     <div>
       {/* <div style={{ backgroundColor: '#4CAF50', minHeight: '100vh' }}> Set background color and full height */}
@@ -46,6 +48,7 @@ export default function App() {
         <Route path="/graduationdateaccordion" element={<GraduationDateAccordion />} />
 
       </Routes >
+
     </div >
     // </div >
   )

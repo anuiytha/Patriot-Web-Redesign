@@ -95,7 +95,7 @@ const EmployeeDashboard = () => {
 
                 {/* Right Side Columns */}
                 <Box sx={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <Accordion defaultExpanded>
+                    <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Leave Balances as of</Typography>
                         </AccordionSummary>
@@ -120,7 +120,7 @@ const EmployeeDashboard = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion defaultExpanded>
+                    <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">My Activities</Typography>
                         </AccordionSummary>
@@ -150,7 +150,7 @@ const EmployeeDashboard = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion defaultExpanded>
+                    <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Pay Information</Typography>
                         </AccordionSummary>
@@ -176,7 +176,7 @@ const EmployeeDashboard = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion defaultExpanded>
+                    <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Benefits</Typography>
                         </AccordionSummary>
@@ -196,7 +196,7 @@ const EmployeeDashboard = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion defaultExpanded>
+                    <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Taxes</Typography>
                         </AccordionSummary>
@@ -221,7 +221,7 @@ const EmployeeDashboard = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion defaultExpanded>
+                    <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Employee Summary</Typography>
                         </AccordionSummary>

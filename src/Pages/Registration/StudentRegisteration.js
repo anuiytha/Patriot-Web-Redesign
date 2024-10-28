@@ -48,7 +48,7 @@ function ChildModal({ addClass }) {
         const foundCourse = courseDatabase.find(course =>
             course.subject === subject || course.courseNumber === courseNumber
         );
-        setCourseFound(foundCourse || null); // Clear if not found
+        setCourseFound(foundCourse ? foundCourse : null); // Clear if not found
     };
 
     const handleAddClass = () => {
@@ -80,17 +80,21 @@ function ChildModal({ addClass }) {
                         <div>
                             <TextField
                                 label="Subject"
+                                placeholder="Ex: Software Engineering"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
                                 fullWidth
+                                required
                             />
                         </div>
                         <div>
                             <TextField
                                 label="Course Number"
+                                placeholder="Ex: 632"
                                 value={courseNumber}
                                 onChange={(e) => setCourseNumber(e.target.value)}
                                 fullWidth
+                                required
                             />
                         </div>
 
@@ -105,7 +109,6 @@ function ChildModal({ addClass }) {
                                 <p><strong>Meeting Time:</strong>{courseFound.MeetingTime}</p>
                             </Box>
                         )}
-
                         <FormControlLabel
                             control={<Checkbox checked={isAdvanced} onChange={() => setIsAdvanced(!isAdvanced)} />}
                             label="Advanced Search"
