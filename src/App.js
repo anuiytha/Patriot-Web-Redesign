@@ -20,10 +20,8 @@ import GraduationDateAccordion from "./Pages/StudentServices/GraduationDateAccor
 
 // import FinancialInfo from "./Pages/Financial Aid/FinancialInfo";
 
-
 export default function App() {
 
-  const navigate = useNavigate();
   return (
     <div>
       {/* <div style={{ backgroundColor: '#4CAF50', minHeight: '100vh' }}> Set background color and full height */}
