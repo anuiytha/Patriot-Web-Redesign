@@ -21,8 +21,8 @@ import GoogleCalendar from "./components/GoogleCalender";
 
 // import FinancialInfo from "./Pages/Financial Aid/FinancialInfo";
 
-
 export default function App() {
+
   return (
     <div>
       {/* <div style={{ backgroundColor: '#4CAF50', minHeight: '100vh' }}> Set background color and full height */}
@@ -50,6 +50,7 @@ export default function App() {
        
 
       </Routes >
+
     </div >
     // </div >
   )
