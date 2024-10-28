@@ -89,7 +89,7 @@ const PersonalProfile = () => {
 
     const renderFields = () => {
         if (!editingCategory) return null;
-
+    
         if (editingCategory === 'PersonalDetails') {
             return (
                 <>
@@ -145,10 +145,18 @@ const PersonalProfile = () => {
                             ))}
                         </Select>
                     </FormControl>
+                    <TextField
+                        label="Personal Pronoun"
+                        name="PersonalPronoun"
+                        value={userInfo.PersonalDetails.PersonalPronoun}
+                        onChange={(e) => handleChange(e, 'PersonalDetails')}
+                        fullWidth
+                        margin="normal"
+                    />
                 </>
             );
         }
-
+        
         if (editingCategory === 'AdditionalDetails') {
             return (
                 <>
