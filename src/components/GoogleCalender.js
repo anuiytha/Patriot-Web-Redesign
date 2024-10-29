@@ -1,5 +1,5 @@
 // GoogleCalendar.js or your existing component file
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { gapi } from 'gapi-script';
 import { Box, Typography } from '@mui/material';
 
@@ -9,6 +9,27 @@ const scopes = 'https://www.googleapis.com/auth/calendar.readonly'; // Scopes fo
 
 const GoogleCalendar = () => {
     const [calendarEvents, setCalendarEvents] = useState([]);
+
+    const getAccessToken = useCallback(() => {
+        const accessToken = gapi.auth.getToken().access_token;
+        console.log('Access Token:', accessToken);
+        fetchCalendarEvents(accessToken);
+    }, []); // Empty dependency array to make getAccessToken stable
+
+    const fetchCalendarEvents = (accessToken) => {
+        gapi.client.calendar.events.list({
+            calendarId: 'primary',
+            timeMin: new Date().toISOString(),
+            maxResults: 10,
+            singleEvents: true,
+            orderBy: 'startTime',
+        }).then((response) => {
+            const events = response.result.items;
+            setCalendarEvents(events);
+        }).catch((error) => {
+            console.error('Error fetching events:', error);
+        });
+    };
 
     useEffect(() => {
         function start() {
@@ -28,28 +49,7 @@ const GoogleCalendar = () => {
         }
 
         gapi.load('client:auth2', start);
-    }, []);
-
-    const getAccessToken = () => {
-        const accessToken = gapi.auth.getToken().access_token;
-        console.log('Access Token:', accessToken);
-        fetchCalendarEvents(accessToken);
-    };
-
-    const fetchCalendarEvents = (accessToken) => {
-        gapi.client.calendar.events.list({
-            calendarId: 'primary',
-            timeMin: new Date().toISOString(),
-            maxResults: 10,
-            singleEvents: true,
-            orderBy: 'startTime',
-        }).then((response) => {
-            const events = response.result.items;
-            setCalendarEvents(events);
-        }).catch((error) => {
-            console.error('Error fetching events:', error);
-        });
-    };
+    }, [getAccessToken]); // Now getAccessToken is stable and can be used safely
 
     return (
         <Box sx={{ padding: 4 }}>
