@@ -1,7 +1,7 @@
 // GoogleCalendar.js or your existing component file
 import React, { useEffect, useState } from 'react';
 import { gapi } from 'gapi-script';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const clientId = '299028247097-77r1i63bpno2f9rre2gqtf84djfjpmvh.apps.googleusercontent.com'; // Replace with your Google Client ID
 const apiKey = 'AIzaSyD-y_A8bXKO9MHFsg-sTEHxtqDfOzpHhy0'; // Replace with your Google API Key
