@@ -18,7 +18,7 @@ const Registration = () => {
             flexDirection="column"
 
             justifyContent="center"
-            minHeight="100vh"
+            minHeight="70vh"
             p={2}
             sx={{
                 overflow: 'hidden',

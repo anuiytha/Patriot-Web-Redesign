@@ -60,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
 
-    const navigate = useNavigate();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -131,7 +131,9 @@ export default function Header() {
                         </Badge>
                     </IconButton>
                 </Link>
-                <p>Messages</p>
+                <div role="alert" aria-live="assertive">
+                    <p>Messages</p>
+                </div>
             </MenuItem>
             <MenuItem>
                 <IconButton
@@ -167,7 +169,7 @@ export default function Header() {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: 'darkgreen' }}>
                     <Toolbar>
-                        <img src="./m1.webp" alt="Logo" />
+                        <img src="/m1.webp" alt="Logo" />
                         <Typography variant="h3" sx={{ display: 'flex', alignItems: 'center' }}>Patriot Web</Typography>
 
                         <Search>
@@ -191,7 +193,7 @@ export default function Header() {
                                         <IconButton size="large" aria-label="go to home" color="inherit">
                                             <Badge color="error">
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
-                                                    <button onClick={() => navigate(-1)} sx={{ color: 'darkgreen', margin: '8px' }}>back</button>
+                                                    {/* <button onClick={() => navigate(-1)} sx={{ color: 'darkgreen', margin: '8px' }}>back</button> */}
                                                     <HomeIcon />
                                                 </div>
                                             </Badge>

@@ -1,0 +1,57 @@
+/* Breadcrumb Container */
+nav[aria-label="breadcrumb"] {
+    font-size: 16px;
+    margin: 10px 0;
+    background-color: #f8f9fa;
+    /* Light background for breadcrumb container */
+    padding: 10px 15px;
+    border-radius: 5px;
+    /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+/* Breadcrumb List Styling */
+nav[aria-label="breadcrumb"] ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Breadcrumb Items */
+nav[aria-label="breadcrumb"] li {
+    margin-right: 8px;
+    position: relative;
+    /* Ensures separator styling is positioned correctly */
+}
+
+/* Separator between Breadcrumb Items */
+nav[aria-label="breadcrumb"] li:not(:last-child)::after {
+    content: ">";
+    margin: 0 8px;
+    color: #ccc;
+    /* Light gray for the separator */
+}
+
+/* Links Styling */
+nav[aria-label="breadcrumb"] li a {
+    text-decoration: none;
+    color: #007bff;
+    /* Primary blue for links */
+    transition: color 0.2s;
+    /* Smooth transition for hover effect */
+}
+
+nav[aria-label="breadcrumb"] li a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+    /* Darker blue on hover */
+}
+
+/* Active Breadcrumb (Current Page) */
+nav[aria-label="breadcrumb"] li span {
+    font-weight: bold;
+    color: #495057;
+    /* Dark gray for the active item */
+}

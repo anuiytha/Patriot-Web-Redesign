@@ -19,7 +19,7 @@ const PersonalInfo = () => {
                 flexDirection="column"        // Arrange items in a column
                 alignItems="center"           // Center horizontally
                 justifyContent="center"       // Center vertically
-                minHeight="75vh"             // Full viewport height
+                minHeight="70vh"             // Full viewport height
                 p={2}                         // Padding around the container
                 sx={{
                     overflow: 'hidden',        // Prevent container scrolling
