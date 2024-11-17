@@ -47,7 +47,11 @@ function ChildModal({ addClass }) {
     const handleSearchCourse = () => {
         // Find a course where either the subject or course number matches the input
         const foundCourse = courseDatabase.find(course =>
+
             (subject && course.subject === subject) ||
+
+            (subject && course.subject.toLowerCase() === subject.toLowerCase()) ||
+
             (courseNumber && course.courseNumber === courseNumber)
         );
         setCourseFound(foundCourse ? foundCourse : null); // Clear if not found

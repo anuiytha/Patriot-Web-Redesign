@@ -18,6 +18,7 @@ import FinancialDashboard from "./Pages/FinancialAidServices/FinancialDashboard"
 import StudentRecords from "./Pages/StudentServices/StudentRecords";
 import GraduationDateAccordion from "./Pages/StudentServices/GraduationDateAccordion";
 import Breadcrumb from "./components/Breadcrumbs";
+import GoogleCalendar from "./components/GoogleCalender";
 
 
 // import FinancialInfo from "./Pages/Financial Aid/FinancialInfo";
@@ -26,7 +27,6 @@ export default function App() {
 
   return (
     <div>
-      {/* <div style={{ backgroundColor: '#4CAF50', minHeight: '100vh' }}> Set background color and full height */}
 
       <Header />
       <Breadcrumb />
@@ -45,9 +45,14 @@ export default function App() {
         <Route path="/help" element={<Help />} />
         <Route path="/employeeservices/employeedashboard" element={<EmployeeDashboard />} />
         <Route path="/employeetimesheet" element={<EmployeeTimesheet />} />
+        <Route path="/employeedashboard" element={<EmployeeDashboard />} />
+        <Route path="/employeetimesheet" element={<EmployeeTimesheet />} />
         <Route path="/studentrecords" element={<StudentRecords />} />
         <Route path="/financialAid/financialAidDashboard" element={<FinancialDashboard />} />
         <Route path="/graduationdateaccordion" element={<GraduationDateAccordion />} />
+        <Route path="/googlecalendar" element={<GoogleCalendar />} />
+
+
 
       </Routes >
 

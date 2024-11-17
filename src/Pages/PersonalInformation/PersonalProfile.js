@@ -25,6 +25,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const ethnicities = [
     'African', 'African American', 'Afro-Caribbean', 'Arab', 'Asian',
@@ -51,6 +53,8 @@ const PersonalProfile = () => {
     const [ssnError, setSsnError] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [showSSN, setShowSSN] = useState(false); // New state for SSN visibility
+    const [showSSNConfirm, setShowSSNConfirm] = useState(false); // New state for Confirm SSN visibility
 
     const handleOpen = (category) => {
         setEditingCategory(category);
@@ -87,9 +91,12 @@ const PersonalProfile = () => {
         }));
     };
 
+    const toggleShowSSN = () => setShowSSN(!showSSN); // Toggle SSN visibility
+    const toggleShowSSNConfirm = () => setShowSSNConfirm(!showSSNConfirm); // Toggle Confirm SSN visibility
+
     const renderFields = () => {
         if (!editingCategory) return null;
-
+    
         if (editingCategory === 'PersonalDetails') {
             return (
                 <>
@@ -145,10 +152,18 @@ const PersonalProfile = () => {
                             ))}
                         </Select>
                     </FormControl>
+                    <TextField
+                        label="Personal Pronoun"
+                        name="PersonalPronoun"
+                        value={userInfo.PersonalDetails.PersonalPronoun}
+                        onChange={(e) => handleChange(e, 'PersonalDetails')}
+                        fullWidth
+                        margin="normal"
+                    />
                 </>
             );
         }
-
+        
         if (editingCategory === 'AdditionalDetails') {
             return (
                 <>
@@ -168,7 +183,8 @@ const PersonalProfile = () => {
                     <TextField
                         label="SSN"
                         name="SSN"
-                        type="password" // Hide input with asterisks
+                        type={showSSN ? 'text' : 'password'} // Show SSN based on toggle
+
                         value={userInfo.AdditionalDetails.SSN}
                         onChange={(e) => {
                             const value = e.target.value.replace(/[^0-9]/g, ''); // Only allows numbers
@@ -177,11 +193,18 @@ const PersonalProfile = () => {
                         fullWidth
                         margin="normal"
                         inputProps={{ maxLength: 11 }} // Limit to 11 digits
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton onClick={toggleShowSSN}>
+                                    {showSSN ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            ),
+                        } }
                     />
                     <TextField
                         label="Confirm SSN"
                         name="SSNConfirm"
-                        type="password" // Hide input with asterisks
+                        type={showSSNConfirm ? 'text' : 'password'} // Show Confirm SSN based on toggle
                         value={userInfo.AdditionalDetails.SSNConfirm}
                         onChange={(e) => {
                             const value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
@@ -192,6 +215,14 @@ const PersonalProfile = () => {
                         error={!!ssnError}
                         helperText={ssnError}
                         inputProps={{ maxLength: 11 }} // Limit to 11 digits
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton onClick={toggleShowSSNConfirm}>
+                                    {showSSNConfirm ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            ),
+                        }}
+
                     />
                 </>
             );

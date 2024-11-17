@@ -1,3 +1,4 @@
+// Import React and MUI components
 import React, { useState } from 'react';
 import {
     Box, Typography, Card, CardContent, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Button, Avatar, Accordion, AccordionSummary, AccordionDetails
@@ -67,7 +68,7 @@ const StudentRecords = () => {
                 {/* Right Side Columns */}
                 <Box sx={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {/* Accordion for Grades */}
-                    <Accordion defaultExpanded>
+                    <Accordion defaultExpanded={false}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">View Grades</Typography>
                         </AccordionSummary>
@@ -87,7 +88,7 @@ const StudentRecords = () => {
                     </Accordion>
 
                     {/* Accordion for Holds */}
-                    <Accordion defaultExpanded>
+                    <Accordion defaultExpanded={false}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">View Your Holds</Typography>
                         </AccordionSummary>
@@ -105,7 +106,7 @@ const StudentRecords = () => {
                     </Accordion>
 
                     {/* Accordion for Graduation Date */}
-                    <Accordion defaultExpanded>
+                    <Accordion defaultExpanded={false}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Expected Graduation Date</Typography>
                         </AccordionSummary>
@@ -116,7 +117,7 @@ const StudentRecords = () => {
                     </Accordion>
 
                     {/* Accordion for Transcripts */}
-                    <Accordion defaultExpanded>
+                    <Accordion defaultExpanded={false}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Transcript Services</Typography>
                         </AccordionSummary>
