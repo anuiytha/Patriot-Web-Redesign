@@ -264,10 +264,13 @@ const PersonalProfile = () => {
                                         width: '100%',
                                     }}
                                     role="separator"
+
                                 />
-                                <Typography><EmailIcon /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
-                                <Typography><HomeIcon /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
-                                <Typography><PhoneIcon /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
+                                <Box>
+                                    <Typography><EmailIcon /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
+                                    <Typography><HomeIcon /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
+                                    <Typography><PhoneIcon /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
+                                </Box>
                             </Box>
                             <Box>
                                 <IconButton onClick={() => handleOpen('PersonalInfo')}>
