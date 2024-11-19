@@ -53,13 +53,13 @@ const PersonalProfile = () => {
     const [ssnError, setSsnError] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [showSSN, setShowSSN] = useState(false); // New state for SSN visibility
-    const [showSSNConfirm, setShowSSNConfirm] = useState(false); // New state for Confirm SSN visibility
+    const [showSSN, setShowSSN] = useState(false);
+    const [showSSNConfirm, setShowSSNConfirm] = useState(false);
 
     const handleOpen = (category) => {
         setEditingCategory(category);
         setOpen(true);
-        setSsnError(''); // Reset SSN error when opening dialog
+        setSsnError('');
     };
 
     const handleClose = () => {
@@ -91,8 +91,9 @@ const PersonalProfile = () => {
         }));
     };
 
-    const toggleShowSSN = () => setShowSSN(!showSSN); // Toggle SSN visibility
-    const toggleShowSSNConfirm = () => setShowSSNConfirm(!showSSNConfirm); // Toggle Confirm SSN visibility
+    const toggleShowSSN = () => setShowSSN(!showSSN);
+    const toggleShowSSNConfirm = () => setShowSSNConfirm(!showSSNConfirm);
+    const handleSnackbarClose = () => setSnackbarOpen(false);
 
     const renderFields = () => {
         if (!editingCategory) return null;
@@ -179,20 +180,18 @@ const PersonalProfile = () => {
                             ))}
                         </Select>
                     </FormControl>
-
                     <TextField
                         label="SSN"
                         name="SSN"
-                        type={showSSN ? 'text' : 'password'} // Show SSN based on toggle
-
+                        type={showSSN ? 'text' : 'password'}
                         value={userInfo.AdditionalDetails.SSN}
                         onChange={(e) => {
-                            const value = e.target.value.replace(/[^0-9]/g, ''); // Only allows numbers
+                            const value = e.target.value.replace(/[^0-9]/g, '');
                             handleChange({ target: { name: 'SSN', value } }, 'AdditionalDetails');
                         }}
                         fullWidth
                         margin="normal"
-                        inputProps={{ maxLength: 11 }} // Limit to 11 digits
+                        inputProps={{ maxLength: 11 }}
                         InputProps={{
                             endAdornment: (
                                 <IconButton onClick={toggleShowSSN}>
@@ -204,17 +203,17 @@ const PersonalProfile = () => {
                     <TextField
                         label="Confirm SSN"
                         name="SSNConfirm"
-                        type={showSSNConfirm ? 'text' : 'password'} // Show Confirm SSN based on toggle
+                        type={showSSNConfirm ? 'text' : 'password'}
                         value={userInfo.AdditionalDetails.SSNConfirm}
                         onChange={(e) => {
-                            const value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
+                            const value = e.target.value.replace(/[^0-9]/g, '');
                             handleChange({ target: { name: 'SSNConfirm', value } }, 'AdditionalDetails');
                         }}
                         fullWidth
                         margin="normal"
                         error={!!ssnError}
                         helperText={ssnError}
-                        inputProps={{ maxLength: 11 }} // Limit to 11 digits
+                        inputProps={{ maxLength: 11 }}
                         InputProps={{
                             endAdornment: (
                                 <IconButton onClick={toggleShowSSNConfirm}>
@@ -222,7 +221,6 @@ const PersonalProfile = () => {
                                 </IconButton>
                             ),
                         }}
-
                     />
                 </>
             );
@@ -231,7 +229,7 @@ const PersonalProfile = () => {
         return Object.keys(userInfo[editingCategory]).map((field) => (
             <TextField
                 key={field}
-                label={field.replace(/([A-Z])/g, ' $1')} // Add spaces between camelCase words
+                label={field.replace(/([A-Z])/g, ' $1')}
                 name={field}
                 value={userInfo[editingCategory][field]}
                 onChange={(e) => handleChange(e, editingCategory)}
@@ -239,10 +237,6 @@ const PersonalProfile = () => {
                 margin="normal"
             />
         ));
-    };
-
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
     };
 
     return (
@@ -254,13 +248,23 @@ const PersonalProfile = () => {
                     <Card sx={{ boxShadow: 3, height: '100%' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'right', justifyContent: 'space-between' }}>
                             <Box sx={{ flex: 2 }}>
-                                <Avatar sx={{ width: 85, height: 85 }}>
+                                <Avatar
+                                    sx={{ width: 85, height: 85 }}
+                                    alt="User Profile Icon"
+                                >
                                     <PersonIcon sx={{ marginRight: 2, width: 50, height: 50, alignItems: 'center' }} />
                                 </Avatar>
                                 <Typography variant="h6">{userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
                                 <br />
                                 <Typography><strong>GNumber:</strong> <br />{userInfo.PersonalInfo.GNumber || 'Not Provided'}</Typography>
-                                <p>----------------------------------------</p>
+                                <Box
+                                    sx={{
+                                        borderBottom: '1px solid #ccc',
+                                        marginY: 1,
+                                        width: '100%',
+                                    }}
+                                    role="separator"
+                                />
                                 <Typography><EmailIcon /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
                                 <Typography><HomeIcon /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
                                 <Typography><PhoneIcon /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
@@ -277,12 +281,22 @@ const PersonalProfile = () => {
                 <Box sx={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <Card sx={{ boxShadow: 3, flex: '1 1 auto' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Avatar sx={{ marginRight: 2, width: 56, height: 56 }}>
+                            <Avatar
+                                sx={{ marginRight: 2, width: 56, height: 56 }}
+                                alt="Personal Details Icon"
+                            >
                                 <PersonIcon />
                             </Avatar>
                             <Box sx={{ flex: 1 }}>
                                 <Typography variant="h6"><strong>Personal Details</strong></Typography>
-                                <p>-----------------------------</p>
+                                <Box
+                                    sx={{
+                                        borderBottom: '1px solid #ccc',
+                                        marginY: 1,
+                                        width: '100%',
+                                    }}
+                                    role="separator"
+                                />
                                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
                                     <Typography><strong>First Name:</strong> <br />{userInfo.PersonalDetails.FirstName || 'Not Provided'}</Typography>
                                     <Typography><strong>Middle Name:</strong><br /> {userInfo.PersonalDetails.MiddleName || 'Not Provided'}</Typography>
@@ -302,12 +316,22 @@ const PersonalProfile = () => {
 
                     <Card sx={{ boxShadow: 3, flex: '1 1 auto' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Avatar sx={{ marginRight: 2, width: 56, height: 56 }}>
+                            <Avatar
+                                sx={{ marginRight: 2, width: 56, height: 56 }}
+                                alt="Email Icon"
+                            >
                                 <EmailIcon />
                             </Avatar>
                             <Box sx={{ flex: 1 }}>
                                 <Typography variant="h6"><strong>Email</strong></Typography>
-                                <p>-----------------------------</p>
+                                <Box
+                                    sx={{
+                                        borderBottom: '1px solid #ccc',
+                                        marginY: 1,
+                                        width: '100%',
+                                    }}
+                                    role="separator"
+                                />
                                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
                                     <Typography><strong>GMU E-mail Address</strong> <br />{userInfo.Email.GMUEmail || 'Not Provided'} <br /></Typography>
                                     <Typography><strong>Personal E-mail Address</strong> <br />{userInfo.Email.OtherEmail1 || 'Not Provided'}</Typography>
@@ -325,12 +349,22 @@ const PersonalProfile = () => {
 
                     <Card sx={{ boxShadow: 3, flex: '1 1 auto' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Avatar sx={{ marginRight: 2, width: 56, height: 56 }}>
+                            <Avatar
+                                sx={{ marginRight: 2, width: 56, height: 56 }}
+                                alt="Additional Details Icon"
+                            >
                                 <ListAltIcon />
                             </Avatar>
                             <Box sx={{ flex: 1 }}>
                                 <Typography variant="h6"><strong>Additional Details</strong></Typography>
-                                <p>-----------------------------</p>
+                                <Box
+                                    sx={{
+                                        borderBottom: '1px solid #ccc',
+                                        marginY: 1,
+                                        width: '100%',
+                                    }}
+                                    role="separator"
+                                />
                                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
                                     <Typography><strong>Ethnicity:</strong> <br />{userInfo.AdditionalDetails.EthnicityRace || 'Not Provided'}</Typography>
                                     <Typography><strong>SSN:</strong> <br />{userInfo.AdditionalDetails.SSN ? '******' : 'Not Provided'}</Typography>
@@ -359,10 +393,22 @@ const PersonalProfile = () => {
 
             <Snackbar
                 open={snackbarOpen}
-                autoHideDuration={3000}
                 onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                <Alert
+                    onClose={handleSnackbarClose}
+                    severity="success"
+                    action={
+                        <Button color="inherit" size="small" onClick={handleSnackbarClose}>
+                            OK
+                        </Button>
+                    }
+                    sx={{
+                        width: '100%',
+                        fontSize: '1rem',
+                    }}
+                >
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
