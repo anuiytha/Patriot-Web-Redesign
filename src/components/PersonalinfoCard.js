@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import AspectRatio from '@mui/joy/AspectRatio';
 import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
@@ -13,21 +12,24 @@ import { Link } from "@mui/material";
 
 const PersonalinfoCard = ({ personalInfo }) => {
 
+    console.log(personalInfo);
+
     const imageUrl = personalInfo?.avatar?.fields?.file?.url
         ? `https:${personalInfo.avatar.fields.file.url}`  // Ensure the URL is prefixed with 'https:'
         : 'https://via.placeholder.com/345x140';
+
 
     return (
         <div>
             <Card
                 data-resizable
                 sx={{
-                    height: 200,
+                    height: 290,
                     display: 'flex',
                     flexDirection: 'column',
                     textAlign: 'center',
                     alignItems: 'center',
-                    width: 250,
+                    width: 340,
                     // to make the demo resizable
                     overflow: 'hidden',
                     '--icon-size': '100px',
