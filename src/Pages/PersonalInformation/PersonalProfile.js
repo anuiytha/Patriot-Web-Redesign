@@ -265,12 +265,12 @@ const PersonalProfile = () => {
                                     }}
                                     role="separator"
                                 />
-                                <Typography><EmailIcon /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
-                                <Typography><HomeIcon /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
-                                <Typography><PhoneIcon /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
+                                <Typography><EmailIcon aria-label="Email icon" /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography> //added ARIA labels
+                                <Typography><HomeIcon aria-label="Home address icon" /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
+                                <Typography><PhoneIcon aria-label="Phone icon" /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
                             </Box>
                             <Box>
-                                <IconButton onClick={() => handleOpen('PersonalInfo')}>
+                                <IconButton onClick={() => handleOpen('PersonalInfo')} aria-label="Edit Personal Info">
                                     <EditIcon sx={{ color: 'black' }} />
                                 </IconButton>
                             </Box>
@@ -385,7 +385,7 @@ const PersonalProfile = () => {
                 <DialogContent>{renderFields()}</DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleSave} color="primary" variant="contained">
+                    <Button onClick={handleSave} color="primary" variant="contained" autoFocus>
                         Save
                     </Button>
                 </DialogActions>
