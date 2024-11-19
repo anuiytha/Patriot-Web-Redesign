@@ -16,7 +16,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import { Typography } from '@mui/material';
 import { Tooltip } from '@mui/material';
-import Help from "../Pages/help";
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -124,16 +124,14 @@ export default function Header() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                {/* <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+                <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
                     <IconButton size="large" aria-label="go to home" color="inherit">
                         <Badge color="error">
                             <HomeIcon />
                         </Badge>
                     </IconButton>
-                </Link> */}
-                <Link to="/help" style={{ color: 'inherit', textDecoration: 'none' }}>
-                    <p>Help</p>
                 </Link>
+
                 <div role="alert" aria-live="assertive">
                     <p>Messages</p>
                 </div>
