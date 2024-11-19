@@ -94,9 +94,13 @@ const PersonalProfile = () => {
     const toggleShowSSN = () => setShowSSN(!showSSN); // Toggle SSN visibility
     const toggleShowSSNConfirm = () => setShowSSNConfirm(!showSSNConfirm); // Toggle Confirm SSN visibility
 
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
     const renderFields = () => {
         if (!editingCategory) return null;
-    
+
         if (editingCategory === 'PersonalDetails') {
             return (
                 <>
@@ -163,7 +167,7 @@ const PersonalProfile = () => {
                 </>
             );
         }
-        
+
         if (editingCategory === 'AdditionalDetails') {
             return (
                 <>
@@ -199,7 +203,7 @@ const PersonalProfile = () => {
                                     {showSSN ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             ),
-                        } }
+                        }}
                     />
                     <TextField
                         label="Confirm SSN"
@@ -222,7 +226,6 @@ const PersonalProfile = () => {
                                 </IconButton>
                             ),
                         }}
-
                     />
                 </>
             );
@@ -241,10 +244,6 @@ const PersonalProfile = () => {
         ));
     };
 
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
-
     return (
         <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: 4 }}>
             <Typography variant="h4" gutterBottom>Personal Information</Typography>
@@ -254,7 +253,10 @@ const PersonalProfile = () => {
                     <Card sx={{ boxShadow: 3, height: '100%' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'right', justifyContent: 'space-between' }}>
                             <Box sx={{ flex: 2 }}>
-                                <Avatar sx={{ width: 85, height: 85 }}>
+                                <Avatar
+                                    sx={{ width: 85, height: 85 }}
+                                    alt="User Profile Icon" // Added alt description
+                                >
                                     <PersonIcon sx={{ marginRight: 2, width: 50, height: 50, alignItems: 'center' }} />
                                 </Avatar>
                                 <Typography variant="h6">{userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
@@ -277,7 +279,10 @@ const PersonalProfile = () => {
                 <Box sx={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <Card sx={{ boxShadow: 3, flex: '1 1 auto' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Avatar sx={{ marginRight: 2, width: 56, height: 56 }}>
+                            <Avatar
+                                sx={{ marginRight: 2, width: 56, height: 56 }}
+                                alt="Personal Details Icon" // Added alt description
+                            >
                                 <PersonIcon />
                             </Avatar>
                             <Box sx={{ flex: 1 }}>
@@ -302,7 +307,10 @@ const PersonalProfile = () => {
 
                     <Card sx={{ boxShadow: 3, flex: '1 1 auto' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Avatar sx={{ marginRight: 2, width: 56, height: 56 }}>
+                            <Avatar
+                                sx={{ marginRight: 2, width: 56, height: 56 }}
+                                alt="Email Icon" // Added alt description
+                            >
                                 <EmailIcon />
                             </Avatar>
                             <Box sx={{ flex: 1 }}>
@@ -325,7 +333,10 @@ const PersonalProfile = () => {
 
                     <Card sx={{ boxShadow: 3, flex: '1 1 auto' }}>
                         <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Avatar sx={{ marginRight: 2, width: 56, height: 56 }}>
+                            <Avatar
+                                sx={{ marginRight: 2, width: 56, height: 56 }}
+                                alt="Additional Details Icon" // Added alt description
+                            >
                                 <ListAltIcon />
                             </Avatar>
                             <Box sx={{ flex: 1 }}>
@@ -359,10 +370,22 @@ const PersonalProfile = () => {
 
             <Snackbar
                 open={snackbarOpen}
-                autoHideDuration={3000}
                 onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Position at the top center
             >
-                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                <Alert
+                    onClose={handleSnackbarClose}
+                    severity="success"
+                    action={
+                        <Button color="inherit" size="small" onClick={handleSnackbarClose}>
+                            OK
+                        </Button>
+                    }
+                    sx={{
+                        width: '100%',
+                        fontSize: '1rem', // Ensure the text is readable
+                    }}
+                >
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
