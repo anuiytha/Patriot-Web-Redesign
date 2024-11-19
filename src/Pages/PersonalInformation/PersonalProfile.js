@@ -265,7 +265,7 @@ const PersonalProfile = () => {
                                     }}
                                     role="separator"
                                 />
-                                <Typography><EmailIcon aria-label="Email icon" /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography> //added ARIA labels
+                                <Typography><EmailIcon aria-label="Email icon" /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography>
                                 <Typography><HomeIcon aria-label="Home address icon" /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
                                 <Typography><PhoneIcon aria-label="Phone icon" /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
                             </Box>
