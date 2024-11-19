@@ -273,10 +273,6 @@ const PersonalProfile = () => {
                                     <Typography><PhoneIcon /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
                                 </Box>
 
-                                <Typography><EmailIcon aria-label="Email icon" /> {userInfo.PersonalInfo.Email || 'Not Provided'}</Typography> //added ARIA labels
-                                <Typography><HomeIcon aria-label="Home address icon" /> {userInfo.PersonalInfo.HomeAddress || 'Not Provided'}</Typography>
-                                <Typography><PhoneIcon aria-label="Phone icon" /> {userInfo.PersonalInfo.PhoneNumber || 'Not Provided'}</Typography>
-
                             </Box>
                             <Box>
                                 <IconButton onClick={() => handleOpen('PersonalInfo')} aria-label="Edit Personal Info">
