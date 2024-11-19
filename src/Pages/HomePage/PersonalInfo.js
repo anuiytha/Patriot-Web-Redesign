@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import useContentful from "../../components/contentful/useContentful";
 import PersonalinfoCard from "../../components/PersonalinfoCard";
 import { Box } from "@mui/material";
+
 const PersonalInfo = () => {
     const [pi_list, setList] = useState([]);
     const { getPersonalInfo } = useContentful();

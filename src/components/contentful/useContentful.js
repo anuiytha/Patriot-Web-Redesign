@@ -29,6 +29,29 @@ const useContentful = () => {
         }
     }
 
+    const getStudentProfile = async () => {
+        try {
+            const sp_entries = await client.getEntries({
+                content_type: "studentProfile",
+                select: "fields",
+            })
+
+            const sp_sanitizedEntries = sp_entries.items.map((item) => {
+                const sp_avatar = item.fields.avatar.fields;
+
+                return {
+                    ...item.fields,
+                    sp_avatar
+                }
+            })
+
+            return sp_sanitizedEntries
+        } catch (error) {
+            console.log(`Error fecthing studentProfile: ${error}`);
+        }
+    }
+
+
     const getPersonalInfo = async () => {
         try {
             const pi_entries = await client.getEntries({
@@ -157,7 +180,7 @@ const useContentful = () => {
         }
     }
 
-    return { getCategories, getPersonalInfo, getEmployeeServices, getStudentServices, getFinancialAid, getRegistration, getRegPlan }
+    return { getCategories, getPersonalInfo, getEmployeeServices, getStudentServices, getFinancialAid, getRegistration, getRegPlan, getStudentProfile }
 
 
 

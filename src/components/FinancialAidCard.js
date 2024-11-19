@@ -35,7 +35,9 @@ const Cards = ({ financialAid }) => {
                         position: 'relative',
                     }}
                 >
-                    <Avatar src={imageUrl} sx={{ '--Avatar-size': '2rem' }} />
+                    <Avatar src={imageUrl}
+                        alt={financialAid.name || "User avatar"}
+                        sx={{ '--Avatar-size': '2rem' }} />
                 </AspectRatio>
             </CardOverflow>
             {/* Increased margin-top to add more space between the avatar and button */}

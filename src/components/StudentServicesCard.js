@@ -47,7 +47,10 @@ const Cards = ({ studentServices }) => {
                             position: 'relative',
                         }}    >
 
-                        <Avatar src={imageUrl} sx={{ '--Avatar-size': '6rem' }} />
+                        <Avatar src={imageUrl}
+                            alt={studentServices.name || "User avatar"}
+
+                            sx={{ '--Avatar-size': '6rem' }} />
 
                     </AspectRatio>
                 </CardOverflow>

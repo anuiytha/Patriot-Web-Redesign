@@ -31,7 +31,9 @@ const Cards = ({ categories }) => {
                         position: 'relative',
                     }}
                 >
-                    <Avatar src={categories.avatar.file.url} sx={{ '--Avatar-size': '4rem' }} />
+                    <Avatar src={categories.avatar.file.url}
+                        alt={categories.name || "User avatar"}
+                        sx={{ '--Avatar-size': '4rem' }} />
                 </AspectRatio>
             </CardOverflow>
             {/* Increased margin-top to add more space between the avatar and button */}

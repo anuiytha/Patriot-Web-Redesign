@@ -168,7 +168,7 @@ export default function Header() {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: 'darkgreen' }}>
                     <Toolbar>
-                        <img src="/m1.webp" alt="Logo" />
+                        <img src="/m1.webp" alt="Patriot Web Mascot" />
                         <Typography variant="h3" sx={{ display: 'flex', alignItems: 'center' }}>Patriot Web</Typography>
 
                         <Search>

@@ -32,7 +32,7 @@ const RegPlanCard = ({ registerPlan }) => {
                         <CardMedia
                             component="img"
                             image={imageUrl}  // Use the constructed imageUrl
-                            alt={registerPlan?.title || 'Image'}
+                            alt={registerPlan?.name || 'Image'}
                             sx={{ width: '30%', height: 155, margin: '0 auto', objectFit: 'contain' }}
                         />
                         <CardContent>

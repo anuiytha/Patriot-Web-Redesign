@@ -75,7 +75,7 @@ function ChildModal({ addClass }) {
                 aria-describedby="child-modal-description"
             >
                 <Box sx={{ ...style, width: 600 }}>
-                    <h2>Register for Classes</h2>
+                    <h2 id="child-modal-title">Register for Classes</h2>
                     <h3 id="child-modal-title">Enter your Search Criteria</h3>
 
                     <Box

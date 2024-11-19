@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import AspectRatio from '@mui/joy/AspectRatio';
 import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
@@ -7,14 +6,16 @@ import CardActions from '@mui/joy/CardActions';
 import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
-import { Avatar } from '@mui/joy';
-
+import Avatar from '@mui/joy/Avatar';
 import { Link } from "@mui/material";
 
 
-const employeeServicesCard = ({ employeeServices }) => {
-    const imageUrl = employeeServices?.avatar?.fields?.file?.url
-        ? `https:${employeeServices.avatar.fields.file.url}`  // Ensure the URL is prefixed with 'https:'
+const StudentProfileCard = ({ studentProfile }) => {
+
+    console.log(studentProfile);
+
+    const imageUrl = studentProfile?.avatar?.fields?.file?.url
+        ? `https:${studentProfile.avatar.fields.file.url}`  // Ensure the URL is prefixed with 'https:'
         : 'https://via.placeholder.com/345x140';
 
 
@@ -23,12 +24,12 @@ const employeeServicesCard = ({ employeeServices }) => {
             <Card
                 data-resizable
                 sx={{
-                    height: 300,
+                    height: 290,
                     display: 'flex',
                     flexDirection: 'column',
                     textAlign: 'center',
                     alignItems: 'center',
-                    width: 343,
+                    width: 340,
                     // to make the demo resizable
                     overflow: 'hidden',
                     '--icon-size': '100px',
@@ -49,16 +50,16 @@ const employeeServicesCard = ({ employeeServices }) => {
                         }}    >
                         <div>
                             <Avatar src={imageUrl}
-                                alt={employeeServices.name || "User avatar"}
+                                alt={studentProfile.name || "User avatar"}
                                 sx={{ '--Avatar-size': '6rem' }} />
                         </div>
                     </AspectRatio>
                 </CardOverflow>
                 <Typography level="title-lg" sx={{ mt: 'calc(var(--icon-size) / 2)' }}>
 
-                    <Link href={employeeServices.url} >
+                    <Link href={studentProfile.url} >
                         <Button variant="outlined" sx={{ backgroundColor: 'gold', color: 'black', '&:hover': { backgroundColor: 'darkgoldenrod' } }}>
-                            {employeeServices.name}
+                            {studentProfile.name}
                         </Button>
                     </Link>
 
@@ -66,7 +67,7 @@ const employeeServicesCard = ({ employeeServices }) => {
                 </Typography>
                 <CardContent sx={{ maxWidth: '40ch' }}>
                     <ul>
-                        {employeeServices.description}
+                        {studentProfile.description}
                     </ul>
 
                 </CardContent>
@@ -85,4 +86,4 @@ const employeeServicesCard = ({ employeeServices }) => {
     );
 }
 
-export default employeeServicesCard;
+export default StudentProfileCard;

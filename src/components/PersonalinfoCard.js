@@ -49,7 +49,9 @@ const PersonalinfoCard = ({ personalInfo }) => {
                             position: 'relative',
                         }}    >
                         <div>
-                            <Avatar src={imageUrl} sx={{ '--Avatar-size': '6rem' }} />
+                            <Avatar src={imageUrl}
+                                alt={personalInfo.name || "User avatar"}
+                                sx={{ '--Avatar-size': '6rem' }} />
                         </div>
                     </AspectRatio>
                 </CardOverflow>

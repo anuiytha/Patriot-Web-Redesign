@@ -11,6 +11,7 @@ import RegPlan from "./Pages/Registration/RegPlan";
 import StudentRegisteration from "./Pages/Registration/StudentRegisteration";
 import PersonalProfile from "./Pages/PersonalInformation/PersonalProfile";
 import StudentProfile from "./Pages/StudentServices/StudentProfile";
+import StudentLocation from "./Pages/StudentProfile/StudentLocation";
 import Help from "./Pages/help";
 import EmployeeDashboard from "./Pages/Employee Services/EmployeeDashboard";
 import EmployeeTimesheet from "./Pages/Employee Services/EmployeeTimesheet";
@@ -31,7 +32,6 @@ export default function App() {
       <Header />
       <Breadcrumb />
       <Routes>
-
         <Route path="/" element={<HomePage />} />
         <Route path="/personalInfo" element={<PersonalInfo />} />
         <Route path="/studentservices" element={<StudentServices />} />
@@ -42,6 +42,8 @@ export default function App() {
         <Route path="/studentservices/registration/regplan/studentregistration" element={<StudentRegisteration />} />
         <Route path="/personalInfo/personalprofile" element={<PersonalProfile />} />
         <Route path="/studentprofile" element={<StudentProfile />} />
+        <Route path="/studentprofile/studentlocation/" element={<StudentLocation />} />
+
         <Route path="/help" element={<Help />} />
         <Route path="/employeeservices/employeedashboard" element={<EmployeeDashboard />} />
         <Route path="/employeetimesheet" element={<EmployeeTimesheet />} />
@@ -51,9 +53,6 @@ export default function App() {
         <Route path="/financialAid/financialAidDashboard" element={<FinancialDashboard />} />
         <Route path="/graduationdateaccordion" element={<GraduationDateAccordion />} />
         <Route path="/googlecalendar" element={<GoogleCalendar />} />
-
-
-
       </Routes >
 
     </div >

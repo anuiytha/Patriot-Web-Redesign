@@ -5,6 +5,7 @@ import {
 
 import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Tooltip } from '@mui/material';
 
 const EmployeeDashboard = () => {
     const [userInfo, setUserInfo] = useState({
@@ -78,20 +79,51 @@ const EmployeeDashboard = () => {
                 {/* Left Box */}
                 <Box sx={{ flex: '1 1 40%', maxWidth: '400px' }}>
                     <Card sx={{ boxShadow: 3, height: '100%' }}>
-                        <CardContent sx={{ display: 'flex' }}>
-                            <Box sx={{ flex: 1, alignItems: "center" }}>
-                                <Avatar sx={{ width: 60, height: 60, alignItems: "center" }}>
-                                    <PersonIcon />
-                                </Avatar>
-                                <Typography variant="h6">{userInfo.EmployeeInfo.UserName || 'Not Provided'}</Typography>
-                                <br />
-                                <a href="/personalprofile">
-                                    <button> My Profile</button>
-                                </a>
+                        <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            {/* Avatar and Profile Info */}
+                            <Avatar sx={{ width: 60, height: 60, alignItems: "center", mb: 2 }}>
+                                <PersonIcon />
+                            </Avatar>
+                            <Typography variant="h6">{userInfo.EmployeeInfo.UserName || 'Not Provided'}</Typography>
+                            <br />
+                            <a href="/personalprofile">
+                                <button>My Profile</button>
+                            </a>
+
+                            {/* Activities Section */}
+                            <Box sx={{ mt: 8, width: '100%' }}>
+                                <Typography variant="h6" align="center">My Activities</Typography>
+                                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: 2, mt: 2 }}>
+                                    <Tooltip title="You can enter your Working Hours">
+                                        <Button
+                                            sx={{
+                                                backgroundColor: '#000',
+                                                color: '#fff',
+                                                '&:hover': { backgroundColor: '#333' },
+                                                borderRadius: '5px',
+                                            }}
+                                            href="/employeetimesheet"
+                                        >
+                                            Enter Time
+                                        </Button>
+                                    </Tooltip>
+
+                                    <Card sx={{ boxShadow: 3, p: 2 }}>
+                                        <CardContent>
+                                            <Typography><strong>Labor Redistribution</strong></Typography>
+                                        </CardContent>
+                                    </Card>
+                                    <Card sx={{ boxShadow: 3, p: 2 }}>
+                                        <CardContent>
+                                            <Typography><strong>Employee Menu</strong></Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Box>
                             </Box>
                         </CardContent>
                     </Card>
                 </Box>
+
 
                 {/* Right Side Columns */}
                 <Box sx={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -120,35 +152,7 @@ const EmployeeDashboard = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    <Accordion >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">My Activities</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
 
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-
-
-
-                                <Button sx={{ backgroundColor: '#000', color: '#fff' }} href="/employeetimesheet">
-                                    Enter Time
-                                </Button>
-
-
-
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Labor Redistribution</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Employee Menu</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        </AccordionDetails>
-                    </Accordion>
 
                     <Accordion >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>

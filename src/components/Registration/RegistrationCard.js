@@ -18,11 +18,11 @@ const RegistrationCard = ({ registration }) => {
             <Card
                 data-resizable
                 sx={{
-                    height: 250,
+                    height: 315,
                     display: 'flex',
                     flexDirection: 'column',
                     textAlign: 'center',
-                    width: 343,
+                    width: 330,
                     // to make the demo resizable
                     overflow: 'hidden',
                     '--icon-size': '100px',

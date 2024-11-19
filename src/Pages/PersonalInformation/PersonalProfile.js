@@ -96,7 +96,7 @@ const PersonalProfile = () => {
 
     const renderFields = () => {
         if (!editingCategory) return null;
-    
+
         if (editingCategory === 'PersonalDetails') {
             return (
                 <>
@@ -163,7 +163,7 @@ const PersonalProfile = () => {
                 </>
             );
         }
-        
+
         if (editingCategory === 'AdditionalDetails') {
             return (
                 <>
@@ -199,7 +199,7 @@ const PersonalProfile = () => {
                                     {showSSN ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             ),
-                        } }
+                        }}
                     />
                     <TextField
                         label="Confirm SSN"
