@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'; // Import Link from React Router
 import { Typography } from '@mui/material';
 import { Tooltip } from '@mui/material';
 
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -130,6 +131,7 @@ export default function Header() {
                         </Badge>
                     </IconButton>
                 </Link>
+
                 <div role="alert" aria-live="assertive">
                     <p>Messages</p>
                 </div>
