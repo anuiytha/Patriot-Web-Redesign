@@ -1,31 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-    Box, Typography, Card, CardContent, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button, Avatar, Accordion, AccordionSummary, AccordionDetails
-} from '@mui/material';
+    Box,
+    Typography,
+    Card,
+    CardContent,
+    TextField,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
+    Avatar,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    Tooltip,
+    Snackbar,
+    Grid,
+} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import PersonIcon from '@mui/icons-material/Person';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Tooltip } from '@mui/material';
+const SectionAccordion = ({ title, items }) => (
+    <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="h6">{title}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+            <Grid container spacing={2}>
+                {items.map((item, index) => (
+                    <Grid item xs={12} sm={4} key={index}>
+                        <Card sx={{ boxShadow: 3, p: 2 }}>
+                            <CardContent>
+                                <Typography>
+                                    <strong>{item.label}</strong>
+                                </Typography>
+                                {item.value && (
+                                    <Button variant="outlined" aria-label={`View ${item.label}`}>
+                                        {item.value}
+                                    </Button>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </AccordionDetails>
+    </Accordion>
+);
 
 const EmployeeDashboard = () => {
     const [userInfo, setUserInfo] = useState({
-        EmployeeInfo: { UserName: '', Email: '', HomeAddress: '', PhoneNumber: '' },
-        PersonalDetails: { FirstName: '', MiddleName: '', LastName: '', DOB: '', Sex: '', PersonalPronoun: '', GenderId: '' },
-        additionalInfo1: { field1: '', field2: '' },
-        additionalInfo2: { field1: '', field2: '' },
-        additionalInfo3: { field1: '', field2: '' },
-        additionalInfo4: { field1: '', field2: '' },
-        additionalInfo5: { field1: '', field2: '' },
-        additionalInfo6: { field1: '', field2: '' },
+        EmployeeInfo: { UserName: "John Doe", Email: "john.doe@example.com" },
     });
-
     const [open, setOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState(null);
-
-    // const handleOpen = (category) => {
-    //     setEditingCategory(category);
-    //     setOpen(true);
-    // };
+    const [notification, setNotification] = useState("");
 
     const handleClose = () => {
         setOpen(false);
@@ -33,6 +63,11 @@ const EmployeeDashboard = () => {
     };
 
     const handleSave = () => {
+        if (!userInfo.EmployeeInfo.UserName) {
+            setNotification("Username is required.");
+            return;
+        }
+        setNotification("Changes saved successfully!");
         handleClose();
     };
 
@@ -44,225 +79,142 @@ const EmployeeDashboard = () => {
         }));
     };
 
-    // // const handleDelete = (category) => {
-    // //     setUserInfo((prev) => ({
-    // //         ...prev,
-    // //         [category]: {},
-    // //     }));
-    // };
-
-    // Function to render all fields in the modal for editing
     const renderFields = () => {
         if (!editingCategory) return null;
-
-        const fields = Object.keys(userInfo[editingCategory]).map((field) => (
+        return Object.keys(userInfo[editingCategory]).map((field) => (
             <TextField
                 key={field}
-                label={field.replace(/([A-Z])/g, ' $1')} // Add spaces between camelCase words
+                label={field.replace(/([A-Z])/g, " $1")}
                 name={field}
                 value={userInfo[editingCategory][field]}
                 onChange={(e) => handleChange(e, editingCategory)}
                 fullWidth
                 margin="normal"
+                aria-label={`${field} input`}
             />
         ));
-
-        return fields;
     };
 
-    return (
-        <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: 4 }}>
-            <Typography variant="h4" gutterBottom>Employee Dashboard</Typography>
+    const leaveBalances = [
+        { label: "ACA VA1450 Hours:", value: "56.50" },
+        { label: "Emergency Paid Sick FFCRA:", value: "56.50" },
+        { label: "Emergency FMLA FFCRA:", value: "56.50" },
+    ];
 
-            {/* Main Flex Container */}
-            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                {/* Left Box */}
-                <Box sx={{ flex: '1 1 40%', maxWidth: '400px' }}>
-                    <Card sx={{ boxShadow: 3, height: '100%' }}>
-                        <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            {/* Avatar and Profile Info */}
-                            <Avatar sx={{ width: 60, height: 60, alignItems: "center", mb: 2 }}>
+    const payInformation = [
+        { label: "All Pay Stubs" },
+        { label: "Direct Deposit Information" },
+        { label: "Deductions History" },
+    ];
+
+    const benefits = [
+        { label: "Current Summary" },
+        { label: "Beneficiaries and Dependents" },
+    ];
+
+    const taxes = [
+        { label: "W-4 Employee's Withholding Allowance Certificate" },
+        { label: "Electronic Regulatory Consent" },
+        { label: "W-2 Wage and Tax Statement" },
+    ];
+
+    // **Newly Added Activities**
+    const activities = [
+        {
+            label: "Enter Time",
+            description: "You can enter your working hours",
+            link: "/employeetimesheet",
+        },
+        { label: "Labor Redistribution", link: "/laborredistribution" },
+        { label: "Employee Menu", link: "/employeemenu" },
+    ];
+
+    return (
+        <Box sx={{ maxWidth: 1200, margin: "0 auto", padding: 4 }}>
+            <Typography variant="h4" gutterBottom>
+                Employee Dashboard
+            </Typography>
+
+            <Grid container spacing={4}>
+                {/* Left Side - Profile and Activities */}
+                <Grid item xs={12} sm={4}>
+                    <Card sx={{ boxShadow: 3 }}>
+                        <CardContent sx={{ textAlign: "center" }}>
+                            <Avatar
+                                aria-label="User Avatar"
+                                sx={{ width: 60, height: 60, margin: "0 auto" }}
+                            >
                                 <PersonIcon />
                             </Avatar>
-                            <Typography variant="h6">{userInfo.EmployeeInfo.UserName || 'Not Provided'}</Typography>
-                            <br />
-                            <a href="/personalprofile">
-                                <button>My Profile</button>
-                            </a>
-
-                            {/* Activities Section */}
-                            <Box sx={{ mt: 8, width: '100%' }}>
-                                <Typography variant="h6" align="center">My Activities</Typography>
-                                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: 2, mt: 2 }}>
-                                    <Tooltip title="You can enter your Working Hours">
-                                        <Button
-                                            sx={{
-                                                backgroundColor: '#000',
-                                                color: '#fff',
-                                                '&:hover': { backgroundColor: '#333' },
-                                                borderRadius: '5px',
-                                            }}
-                                            href="/employeetimesheet"
-                                        >
-                                            Enter Time
-                                        </Button>
-                                    </Tooltip>
-
-                                    <Card sx={{ boxShadow: 3, p: 2 }}>
-                                        <CardContent>
-                                            <Typography><strong>Labor Redistribution</strong></Typography>
-                                        </CardContent>
-                                    </Card>
-                                    <Card sx={{ boxShadow: 3, p: 2 }}>
-                                        <CardContent>
-                                            <Typography><strong>Employee Menu</strong></Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Box>
-                            </Box>
+                            <Typography variant="h6" sx={{ mt: 1 }}>
+                                {userInfo.EmployeeInfo.UserName || "Not Provided"}
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                sx={{ mt: 2 }}
+                                href="/personalprofile"
+                                aria-label="Navigate to My Profile"
+                            >
+                                My Profile
+                            </Button>
                         </CardContent>
                     </Card>
-                </Box>
 
+                    {/* My Activities Section */}
+                    <Box sx={{ mt: 4 }}>
+                        <Typography variant="h6" align="center">
+                            My Activities
+                        </Typography>
+                        <Grid container spacing={2} sx={{ mt: 1 }}>
+                            {activities.map((activity, index) => (
+                                <Grid item xs={12} key={index}>
+                                    <Tooltip title={activity.description || ""}>
+                                        <Button
+                                            variant="outlined"
+                                            fullWidth
+                                            href={activity.link}
+                                            aria-label={activity.label}
+                                            sx={{ textTransform: "none" }}
+                                        >
+                                            {activity.label}
+                                        </Button>
+                                    </Tooltip>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Box>
+                </Grid>
 
-                {/* Right Side Columns */}
-                <Box sx={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <Accordion >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">Leave Balances as of</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>ACA VA1450 Hours:</strong> <button> 56.50</button></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Emergency Paid Sick FFCRA:</strong> <button>56.50</button></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Emergency FMLA FFCRA:</strong> <button>56.50</button></Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        </AccordionDetails>
-                    </Accordion>
-
-
-
-                    <Accordion >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">Pay Information</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <p>Latest Pay Stub: date hyperlink</p>
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>All Pay Stubs</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Direct Deposit Information</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Deductions History</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        </AccordionDetails>
-                    </Accordion>
-
-                    <Accordion >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">Benefits</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Current Summary</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Beneficiaries and Dependents</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        </AccordionDetails>
-                    </Accordion>
-
-                    <Accordion >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">Taxes</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>W-4 Employee's Withholding Allowance Certificate</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Electronic Regulatory Consent</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>W-2 Wage and Tax Statement</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        </AccordionDetails>
-                    </Accordion>
-
-                    <Accordion >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">Employee Summary</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Summary Card 1</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Summary Card 2</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                                <Card sx={{ boxShadow: 3, p: 2 }}>
-                                    <CardContent>
-                                        <Typography><strong>Summary Card 3</strong></Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        </AccordionDetails>
-                    </Accordion>
-                </Box>
-            </Box>
+                {/* Right Side - Accordions */}
+                <Grid item xs={12} sm={8}>
+                    <SectionAccordion title="Leave Balances as of" items={leaveBalances} />
+                    <SectionAccordion title="Pay Information" items={payInformation} />
+                    <SectionAccordion title="Benefits" items={benefits} />
+                    <SectionAccordion title="Taxes" items={taxes} />
+                </Grid>
+            </Grid>
 
             {/* Edit Modal */}
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit {editingCategory}</DialogTitle>
-                <DialogContent>
-                    {renderFields()}
-                </DialogContent>
+                <DialogContent>{renderFields()}</DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">Cancel</Button>
-                    <Button onClick={handleSave} color="primary">Save</Button>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSave} color="primary" disabled={!editingCategory}>
+                        Save
+                    </Button>
                 </DialogActions>
             </Dialog>
+
+            {/* Notification Snackbar */}
+            <Snackbar
+                open={!!notification}
+                message={notification}
+                autoHideDuration={4000}
+                onClose={() => setNotification("")}
+            />
         </Box>
     );
 };
