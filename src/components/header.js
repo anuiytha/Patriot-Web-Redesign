@@ -1,22 +1,12 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Box, AppBar, Toolbar, Typography, IconButton, Badge, InputBase, Menu, MenuItem, Tooltip, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link } from 'react-router-dom'; // Import Link from React Router
-import { Typography } from '@mui/material';
-import { Tooltip } from '@mui/material';
-
+import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -47,22 +37,20 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
+        padding: theme.spacing(0.5, 1, 0.5, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
-            width: '20ch',
+            width: '15ch',
         },
     },
 }));
 
 export default function Header() {
-
-
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [openHelpDialog, setOpenHelpDialog] = React.useState(false); // State to manage modal visibility
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -82,6 +70,14 @@ export default function Header() {
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const handleOpenHelpDialog = () => {
+        setOpenHelpDialog(true); // Open the Help modal
+    };
+
+    const handleCloseHelpDialog = () => {
+        setOpenHelpDialog(false); // Close the Help modal
     };
 
     const menuId = 'primary-search-account-menu';
@@ -104,7 +100,6 @@ export default function Header() {
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
-
     );
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -131,7 +126,6 @@ export default function Header() {
                         </Badge>
                     </IconButton>
                 </Link>
-
                 <div role="alert" aria-live="assertive">
                     <p>Messages</p>
                 </div>
@@ -163,17 +157,15 @@ export default function Header() {
         </Menu>
     );
 
-
     return (
         <>
-
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" sx={{ backgroundColor: 'darkgreen' }}>
                     <Toolbar>
-                        <img src="/m1.webp" alt="Patriot Web Mascot" />
-                        <Typography variant="h3" sx={{ display: 'flex', alignItems: 'center' }}>Patriot Web</Typography>
+                        <img src="/m1.webp" alt="Patriot Web Mascot" width="150" height="150" />
+                        <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', fontSize: '24px', marginLeft: 1 }}>Patriot Web</Typography>
 
-                        <Search>
+                        <Search sx={{ maxWidth: '200px' }}>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -183,20 +175,14 @@ export default function Header() {
                             />
                         </Search>
 
-
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            {/* Wrap HomeIcon with Link to navigate to home */}
-
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <Tooltip title="Takes you to the Home Page">
                                     <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
                                         <IconButton size="large" aria-label="go to home" color="inherit">
                                             <Badge color="error">
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
-                                                    {/* <button onClick={() => navigate(-1)} sx={{ color: 'darkgreen', margin: '8px' }}>back</button> */}
-                                                    <HomeIcon />
-                                                </div>
+                                                <HomeIcon />
                                             </Badge>
                                         </IconButton>
                                     </Link>
@@ -217,7 +203,6 @@ export default function Header() {
                                 </Tooltip>
                             </div>
 
-
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <Tooltip title="User Profile">
                                     <IconButton
@@ -232,6 +217,19 @@ export default function Header() {
                                         <AccountCircle />
                                     </IconButton>
                                 </Tooltip >
+                            </div>
+
+                            {/* Help link to open modal */}
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Tooltip title="Help">
+                                    <Button
+                                        color="inherit"
+                                        onClick={handleOpenHelpDialog}
+                                        sx={{ fontSize: '14px' }}
+                                    >
+                                        Help
+                                    </Button>
+                                </Tooltip>
                             </div>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -251,6 +249,48 @@ export default function Header() {
                 {renderMobileMenu}
                 {renderMenu}
             </Box >
+
+            {/* Help Dialog Modal */}
+            <Dialog
+                open={openHelpDialog}
+                onClose={handleCloseHelpDialog}
+                aria-labelledby="help-dialog-title"
+                aria-describedby="help-dialog-description"
+            >
+                <DialogTitle id="help-dialog-title">Help & Support</DialogTitle>
+                <DialogContent>
+                    <Typography style={{ fontWeight: 'bold' }}>
+                        Technical Assistance:
+                    </Typography>
+
+                    <Typography variant="body1">
+                        ITS Support 24/7
+                        <a href="https://chat.edusupportcenter.com/chat/websiteChat?short_name=gmuhd&key=gmuhd2552" target="_blank" rel="noopener noreferrer">
+                            <span> Live Chat</span>
+                        </a>.
+                    </Typography>
+                    <Typography>
+                        Call: 703-993-8870
+                        <br />
+                        support@gmu.edu
+                    </Typography>
+                    <br />
+                    <Typography variant="body1">
+                        You can also check for related problem articles at{' '}
+                        <a href="https://its.gmu.edu" target="_blank" rel="noopener noreferrer">
+                            its.gmu.edu
+                        </a>.
+                    </Typography>
+
+                    {/* Add more help information here */}
+                </DialogContent>
+
+                <DialogActions>
+                    <Button onClick={handleCloseHelpDialog} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog >
         </>
     );
 }

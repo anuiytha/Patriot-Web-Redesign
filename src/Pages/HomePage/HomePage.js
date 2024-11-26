@@ -17,7 +17,7 @@ const HomePage = () => {
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
-            minHeight="70vh"
+            minHeight="90vh"
 
             sx={{
                 overflow: 'hidden',

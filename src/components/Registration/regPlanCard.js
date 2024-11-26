@@ -1,56 +1,88 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
+
+import AspectRatio from '@mui/joy/AspectRatio';
+import Button from '@mui/joy/Button';
+import Card from '@mui/joy/Card';
+import CardActions from '@mui/joy/CardActions';
+import CardContent from '@mui/joy/CardContent';
+import CardOverflow from '@mui/joy/CardOverflow';
+import Typography from '@mui/joy/Typography';
+import { Avatar } from '@mui/joy';
+
 import { Link } from "@mui/material";
 
-const RegPlanCard = ({ registerPlan }) => {
-    // Log the registerPlan object to ensure the structure is correct
-    console.log(registerPlan);
 
-    // Safely access the image URL, including all the nested fields
+const registerPlanCard = ({ registerPlan }) => {
     const imageUrl = registerPlan?.avatar?.fields?.file?.url
         ? `https:${registerPlan.avatar.fields.file.url}`  // Ensure the URL is prefixed with 'https:'
-        : 'https://via.placeholder.com/345x140';  // Fallback image in case avatar is not available
+        : 'https://via.placeholder.com/345x140';
+
 
     return (
-        <>
-            <Link href={registerPlan.url} sx={{ color: 'black', textDecoration: 'none' }}>
-                <Card sx={{
-                    width: 350,          // Set the width to 400px
-                    height: 250,
-                    padding: 2,       // Set the height to 300px
-                    // Add padding inside the card
-                    margin: '0 auto',    // Center the card horizontally
+        <div>
+            <Card
+                data-resizable
+                sx={{
+                    height: 300,
                     display: 'flex',
-                    justifyContent: 'center',  // Center content horizontally
+                    flexDirection: 'column',
+                    textAlign: 'center',
                     alignItems: 'center',
-                }}>
-                    <CardActionArea>
-                        <CardMedia
-                            component="img"
-                            image={imageUrl}  // Use the constructed imageUrl
-                            alt={registerPlan?.name || 'Image'}
-                            sx={{ width: '30%', height: 155, margin: '0 auto', objectFit: 'contain' }}
-                        />
-                        <CardContent>
+                    width: 343,
+                    // to make the demo resizable
+                    overflow: 'hidden',
+                    '--icon-size': '100px',
+                }} >
+                <CardOverflow variant="solid" color="success">
+                    <AspectRatio
+                        variant="outlined"
+                        color="warning"
+                        ratio="1"
+                        sx={{
+                            m: 'auto',
+                            transform: 'translateY(50%)',
+                            borderRadius: '50%',
+                            width: 'var(--icon-size)',
+                            boxShadow: 'sm',
+                            bgcolor: 'background.surface',
+                            position: 'relative',
+                        }}    >
+                        <div>
+                            <Avatar src={imageUrl}
+                                alt={registerPlan.name || "User avatar"}
+                                sx={{ '--Avatar-size': '6rem' }} />
+                        </div>
+                    </AspectRatio>
+                </CardOverflow>
+                <Typography level="title-lg" sx={{ mt: 'calc(var(--icon-size) / 2)' }}>
 
-                            <Typography gutterBottom variant="h5" component="div">
-                                {registerPlan?.name || 'Title Not Available'}
-                            </Typography>
+                    <Link href={registerPlan.url} >
+                        <Button variant="outlined" sx={{ backgroundColor: 'gold', color: 'black', '&:hover': { backgroundColor: 'darkgoldenrod' } }}>
+                            {registerPlan.name}
+                        </Button>
+                    </Link>
 
 
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                {registerPlan?.description || 'Description not available'}
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
-            </Link >
-        </>
+                </Typography>
+                <CardContent sx={{ maxWidth: '40ch' }}>
+                    <ul>
+                        {registerPlan.description}
+                    </ul>
+
+                </CardContent>
+                <CardActions
+                    orientation="vertical"
+                    buttonFlex={1}
+                    sx={{
+                        '--Button-radius': '40px',
+                        width: 'clamp(min(100%, 160px), 50%, min(100%, 200px))',
+                    }} >
+                </CardActions>
+
+            </Card>
+
+        </div >
     );
-};
+}
 
-export default RegPlanCard;
+export default registerPlanCard;
