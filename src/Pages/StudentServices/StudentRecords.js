@@ -3,18 +3,18 @@ import {
     Box,
     Typography,
     Card,
-    CardContent,
+    Button,
+    Avatar,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    LinearProgress,
     Select,
     MenuItem,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogActions,
-    Button,
-    Avatar,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     FormControlLabel,
     Checkbox,
 } from "@mui/material";
@@ -22,8 +22,9 @@ import { Bar } from "react-chartjs-2";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SchoolIcon from "@mui/icons-material/School";
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
+import Slider from '@mui/material/Slider';
 
-// Register Chart.js modules
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const StudentRecords = () => {
@@ -45,41 +46,23 @@ const StudentRecords = () => {
             { course: "NLP", grade: "A", semester: "Fall 2023" },
             { course: "Computational Design", grade: "A-", semester: "Fall 2023" },
         ],
+
         holds: ["Library Fee", "Tuition Due"],
         expectedGraduationDate: "August 2025",
         unofficialTranscriptLink: "link-to-unofficial-transcript",
         officialTranscriptOrderLink: "link-to-order-official-transcript",
     });
 
-    const [showChart, setShowChart] = useState(true);
-    const [selectedTerm, setSelectedTerm] = useState("Fall 2023");
+    const [progress, setProgress] = useState(73.69);
     const [open, setOpen] = useState(false);
+    const [sliderValue, setSliderValue] = useState(progress);
     const [selectedMonth, setSelectedMonth] = useState("August");
     const [selectedYear, setSelectedYear] = useState(2025);
+    const [selectedTerm, setSelectedTerm] = useState("Spring 2024");
+    const [showChart, setShowChart] = useState(true);
 
-    const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
-    const years = Array.from(new Array(10), (val, index) => 2024 + index);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleSave = () => {
         const updatedDate = `${selectedMonth} ${selectedYear}`;
@@ -87,33 +70,31 @@ const StudentRecords = () => {
             ...prevInfo,
             expectedGraduationDate: updatedDate,
         }));
+        setProgress(sliderValue);
         handleClose();
     };
 
-    // Filter grades by selected term
+    const handleSliderChange = (event, newValue) => {
+        setSliderValue(newValue);
+    };
+
     const filteredGrades = studentInfo.grades.filter((g) => g.semester === selectedTerm);
 
-    // Map grades to GPA values and assign colors based on GPA
     const gradeMapping = {
         "A+": 4.0,
         A: 4.0,
         "A-": 3.7,
         "B+": 3.3,
         B: 3.0,
-        "B-": 2.7,
-        C: 2.0,
-        D: 1.0,
-        F: 0.0,
-    };
-    const gradeColors = {
-        4.0: "rgba(75, 192, 192, 0.8)", // Green
-        3.7: "rgba(54, 162, 235, 0.8)", // Blue
-        3.3: "rgba(255, 206, 86, 0.8)", // Yellow
-        3.0: "rgba(255, 159, 64, 0.8)", // Orange
-        2.7: "rgba(255, 99, 132, 0.8)", // Red
     };
 
-    // Prepare data for the bar chart
+    const gradeColors = {
+        4.0: "rgba(75, 192, 192, 0.8)",
+        3.7: "rgba(54, 162, 235, 0.8)",
+        3.3: "rgba(255, 206, 86, 0.8)",
+        3.0: "rgba(255, 159, 64, 0.8)",
+    };
+
     const chartData = {
         labels: filteredGrades.map((g) => g.course),
         datasets: [
@@ -127,54 +108,16 @@ const StudentRecords = () => {
         ],
     };
 
-    // Bar chart options with dynamic sizing and interactivity
-    const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: (tooltipItem) => `GPA: ${tooltipItem.raw}`,
-                },
-            },
-            legend: {
-                display: true,
-                position: "top",
-                labels: {
-                    usePointStyle: true,
-                },
-            },
-        },
-        scales: {
-            x: {
-                ticks: {
-                    font: {
-                        size: 12,
-                    },
-                },
-            },
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 0.5,
-                    font: {
-                        size: 12,
-                    },
-                },
-            },
-        },
-    };
-
     return (
         <Box sx={{ maxWidth: 1200, margin: "0 auto", padding: 4 }}>
             <Typography variant="h4" gutterBottom>
                 Student Records
             </Typography>
 
-            <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-                {/* Personal Info */}
-                <Box sx={{ flex: "1 1 40%", maxWidth: "400px" }}>
-                    <Card sx={{ boxShadow: 3, p: 2 }}>
+            <Box sx={{ display: "flex", gap: 2 }}>
+                {/* Personal Information Card */}
+                <Box sx={{ flex: "1 1 30%", maxWidth: "400px" }}>
+                    <Card sx={{ boxShadow: 3, padding: 2 }}>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                             <Avatar sx={{ width: 60, height: 60 }}>
                                 <SchoolIcon />
@@ -189,16 +132,37 @@ const StudentRecords = () => {
                     </Card>
                 </Box>
 
-                {/* Main Content */}
-                <Box sx={{ flex: "1 1 60%", display: "flex", flexDirection: "column", gap: 2 }}>
-                    {/* Grades */}
-                    <Accordion defaultExpanded={false}>
+                {/* Other Sections */}
+                <Box sx={{ flex: "1 1 70%", display: "flex", flexDirection: "column", gap: 2 }}>
+                    {/* Expected Graduation Date */}
+                    <Card sx={{ padding: 2, boxShadow: 3 }}>
+                        <Typography variant="h6">Expected Graduation Date</Typography>
+                        <Typography sx={{ marginTop: 1 }}>Expected Graduation: {studentInfo.expectedGraduationDate}</Typography>
+                        <Typography sx={{ marginTop: 2 }}>
+                            Progress Toward Graduation: {progress.toFixed(2)}%
+                        </Typography>
+                        <LinearProgress
+                            variant="determinate"
+                            value={progress}
+                            sx={{ marginTop: 1, height: 10, borderRadius: 5 }}
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ marginTop: 2 }}
+                            onClick={handleOpen}
+                        >
+                            Update Graduation Date
+                        </Button>
+                    </Card>
+
+                    {/* View Grades */}
+                    <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">View Grades</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Box>
-                                {/* Term Selection */}
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, marginBottom: 2 }}>
                                     <Typography variant="subtitle1">Select Term:</Typography>
                                     <Select
@@ -214,32 +178,23 @@ const StudentRecords = () => {
                                         ))}
                                     </Select>
                                 </Box>
-
-                                {/* Show Chart Toggle */}
                                 <FormControlLabel
                                     control={<Checkbox checked={showChart} onChange={(e) => setShowChart(e.target.checked)} />}
                                     label="Show Bar Chart"
                                 />
-
-                                {/* Bar Chart */}
                                 {showChart && (
                                     <Box sx={{ height: 300, marginBottom: 4 }}>
-                                        <Typography variant="subtitle1">Grade Overview for {selectedTerm}</Typography>
-                                        <Bar data={chartData} options={chartOptions} />
+                                        <Bar data={chartData} />
                                     </Box>
                                 )}
-
-                                {/* Grade Details */}
                                 <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 2 }}>
                                     {filteredGrades.map((grade, index) => (
                                         <Card key={index} sx={{ boxShadow: 3, p: 2 }}>
-                                            <CardContent>
-                                                <Typography>
-                                                    <strong>{grade.course}</strong>
-                                                </Typography>
-                                                <Typography>Grade: {grade.grade}</Typography>
-                                                <Typography>Semester: {grade.semester}</Typography>
-                                            </CardContent>
+                                            <Typography>
+                                                <strong>{grade.course}</strong>
+                                            </Typography>
+                                            <Typography>Grade: {grade.grade}</Typography>
+                                            <Typography>Semester: {grade.semester}</Typography>
                                         </Card>
                                     ))}
                                 </Box>
@@ -247,8 +202,8 @@ const StudentRecords = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    {/* Holds */}
-                    <Accordion defaultExpanded={false}>
+                    {/* View Your Holds */}
+                    <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">View Your Holds</Typography>
                         </AccordionSummary>
@@ -256,7 +211,9 @@ const StudentRecords = () => {
                             <Box>
                                 {studentInfo.holds.length > 0 ? (
                                     studentInfo.holds.map((hold, index) => (
-                                        <Typography key={index}><strong>{hold}</strong></Typography>
+                                        <Typography key={index}>
+                                            <strong>{hold}</strong>
+                                        </Typography>
                                     ))
                                 ) : (
                                     <Typography>No holds on your account</Typography>
@@ -265,28 +222,17 @@ const StudentRecords = () => {
                         </AccordionDetails>
                     </Accordion>
 
-                    {/* Graduation Date */}
-                    <Accordion defaultExpanded={false}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography variant="h6">Expected Graduation Date</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>{studentInfo.expectedGraduationDate}</Typography>
-                            <Button variant="contained" onClick={handleOpen}>Update Graduation Date</Button>
-                        </AccordionDetails>
-                    </Accordion>
-
-                    {/* Transcripts */}
-                    <Accordion defaultExpanded={false}>
+                    {/* Transcript Services */}
+                    <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography variant="h6">Transcript Services</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                                <Button href={studentInfo.unofficialTranscriptLink} variant="outlined" target="_blank">
+                                <Button href={studentInfo.unofficialTranscriptLink} variant="outlined">
                                     View Unofficial Transcript
                                 </Button>
-                                <Button href={studentInfo.officialTranscriptOrderLink} variant="outlined" target="_blank">
+                                <Button href={studentInfo.officialTranscriptOrderLink} variant="outlined">
                                     Order Official Transcript
                                 </Button>
                             </Box>
@@ -295,31 +241,40 @@ const StudentRecords = () => {
                 </Box>
             </Box>
 
-            {/* Edit Modal */}
+            {/* Dialog for Updating Graduation Date */}
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit Expected Graduation Date</DialogTitle>
                 <DialogContent>
+                    <Typography variant="body1" gutterBottom>
+                        Adjust Progress Toward Graduation:
+                    </Typography>
+                    <Slider
+                        value={sliderValue}
+                        onChange={handleSliderChange}
+                        aria-labelledby="graduation-progress-slider"
+                        valueLabelDisplay="auto"
+                        min={0}
+                        max={100}
+                    />
+                    <Typography sx={{ marginTop: 2 }}>Select New Graduation Date:</Typography>
                     <Select
-                        label="Month"
                         value={selectedMonth}
                         onChange={(e) => setSelectedMonth(e.target.value)}
                         fullWidth
+                        sx={{ marginBottom: 2 }}
                     >
-                        {months.map((month) => (
+                        {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map((month) => (
                             <MenuItem key={month} value={month}>
                                 {month}
                             </MenuItem>
                         ))}
                     </Select>
-
                     <Select
-                        label="Year"
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(e.target.value)}
                         fullWidth
-                        sx={{ marginTop: 2 }}
                     >
-                        {years.map((year) => (
+                        {Array.from({ length: 10 }, (_, i) => 2025 + i).map((year) => (
                             <MenuItem key={year} value={year}>
                                 {year}
                             </MenuItem>
@@ -327,8 +282,8 @@ const StudentRecords = () => {
                     </Select>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">Cancel</Button>
-                    <Button onClick={handleSave} color="primary">Save</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSave}>Save</Button>
                 </DialogActions>
             </Dialog>
         </Box>
