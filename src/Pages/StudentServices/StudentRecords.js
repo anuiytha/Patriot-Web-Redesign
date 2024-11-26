@@ -15,6 +15,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    Slider,
     FormControlLabel,
     Checkbox,
 } from "@mui/material";
@@ -22,8 +23,6 @@ import { Bar } from "react-chartjs-2";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SchoolIcon from "@mui/icons-material/School";
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
-import Slider from '@mui/material/Slider';
-
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -46,7 +45,6 @@ const StudentRecords = () => {
             { course: "NLP", grade: "A", semester: "Fall 2023" },
             { course: "Computational Design", grade: "A-", semester: "Fall 2023" },
         ],
-
         holds: ["Library Fee", "Tuition Due"],
         expectedGraduationDate: "August 2025",
         unofficialTranscriptLink: "link-to-unofficial-transcript",
@@ -101,7 +99,9 @@ const StudentRecords = () => {
             {
                 label: "GPA Equivalent",
                 data: filteredGrades.map((g) => gradeMapping[g.grade] || 0),
-                backgroundColor: filteredGrades.map((g) => gradeColors[gradeMapping[g.grade]] || "rgba(255, 99, 132, 0.8)"),
+                backgroundColor: filteredGrades.map(
+                    (g) => gradeColors[gradeMapping[g.grade]] || "rgba(255, 99, 132, 0.8)"
+                ),
                 borderColor: "rgba(0, 0, 0, 0.1)",
                 borderWidth: 1,
             },
@@ -134,28 +134,6 @@ const StudentRecords = () => {
 
                 {/* Other Sections */}
                 <Box sx={{ flex: "1 1 70%", display: "flex", flexDirection: "column", gap: 2 }}>
-                    {/* Expected Graduation Date */}
-                    <Card sx={{ padding: 2, boxShadow: 3 }}>
-                        <Typography variant="h6">Expected Graduation Date</Typography>
-                        <Typography sx={{ marginTop: 1 }}>Expected Graduation: {studentInfo.expectedGraduationDate}</Typography>
-                        <Typography sx={{ marginTop: 2 }}>
-                            Progress Toward Graduation: {progress.toFixed(2)}%
-                        </Typography>
-                        <LinearProgress
-                            variant="determinate"
-                            value={progress}
-                            sx={{ marginTop: 1, height: 10, borderRadius: 5 }}
-                        />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ marginTop: 2 }}
-                            onClick={handleOpen}
-                        >
-                            Update Graduation Date
-                        </Button>
-                    </Card>
-
                     {/* View Grades */}
                     <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -222,6 +200,34 @@ const StudentRecords = () => {
                         </AccordionDetails>
                     </Accordion>
 
+                    {/* Expected Graduation Date */}
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography variant="h6">Expected Graduation Date</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography sx={{ marginTop: 1 }}>
+                                Expected Graduation: {studentInfo.expectedGraduationDate}
+                            </Typography>
+                            <Typography sx={{ marginTop: 2 }}>
+                                Progress Toward Graduation: {progress.toFixed(2)}%
+                            </Typography>
+                            <LinearProgress
+                                variant="determinate"
+                                value={progress}
+                                sx={{ marginTop: 1, height: 10, borderRadius: 5 }}
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                sx={{ marginTop: 2 }}
+                                onClick={handleOpen}
+                            >
+                                Update Graduation Date
+                            </Button>
+                        </AccordionDetails>
+                    </Accordion>
+
                     {/* Transcript Services */}
                     <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -261,7 +267,7 @@ const StudentRecords = () => {
                         value={selectedMonth}
                         onChange={(e) => setSelectedMonth(e.target.value)}
                         fullWidth
-                        sx={{ marginBottom: 2 }}
+                        sx={{ marginBottom: 2, maxWidth: 200 }}
                     >
                         {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map((month) => (
                             <MenuItem key={month} value={month}>
@@ -273,6 +279,7 @@ const StudentRecords = () => {
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(e.target.value)}
                         fullWidth
+                        sx={{ maxWidth: 200 }}
                     >
                         {Array.from({ length: 10 }, (_, i) => 2025 + i).map((year) => (
                             <MenuItem key={year} value={year}>
